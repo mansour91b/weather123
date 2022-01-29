@@ -16,7 +16,19 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // use to display images and css
 app.use(express.static('public'));
-
+app.get('/favicon.ico', (req, res) => res.status(204));
+app.get('/', async (req, res) => {
+    // get customer details from body parser
+        q = [43.4959805,-80.5220708],
+        apiResponse = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=848e4c9efef048e494f100521210205&q=${q}&days=3&aqi=no&alerts=no`);
+            responseData = await apiResponse.json();
+            //alert(JSON.stringify(responseData));
+            console.log(responseData);
+    
+    
+    res.json(responseData);
+    
+    })
 
 // with customer details retrieved from the form
 app.post('/apikey', async (req, res) => {
